@@ -8,12 +8,12 @@
  *
  * @author hemja
  */
-public class MangmntLogin extends javax.swing.JFrame {
+public class ManagementLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form MangmntLogin
      */
-    public MangmntLogin() {
+    public ManagementLogin() {
         initComponents();
     }
 
@@ -82,10 +82,7 @@ public class MangmntLogin extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 0, 0));
         jButton1.setText("LOGIN");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\USERICON.jpg")); // NOI18N
         jLabel2.setText("jLabel2");
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\password Icon.jpg")); // NOI18N
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 0, 51));
@@ -236,20 +233,21 @@ public class MangmntLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MangmntLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagementLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MangmntLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagementLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MangmntLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagementLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MangmntLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagementLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MangmntLogin().setVisible(true);
+                new ManagementLogin().setVisible(true);
             }
         });
     }
