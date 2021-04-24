@@ -30,10 +30,10 @@ public class DataHandler{
                 tableNames.add("CanTake");
 		return tableNames;
 	}
-public static void RegisterUser(String CustomerName, String CustomerPass,  String CustomerAddr, String CustomerPhon,String CustomerEmail)	{
+public static void RegisterUser(String UserID,String CustomerName, String CustomerPass,  String CustomerAddr, String CustomerPhon,String CustomerEmail)	{
         String msAccDB = "QuizDB.accdb";
         String dbURL = "jdbc:ucanaccess://" + msAccDB; 
-        String query = "INSERT INTO User VALUES ('"+UserID +"','"+ UserName +"','"+ Password  +"');";
+        String query = "INSERT INTO User VALUES ('"+UserID +"','"+ CustomerName +"','"+ CustomerPass  +"');";
         System.out.println(query);
         // Step 1: Loading or registering Oracle JDBC driver class
         // Step 2: Opening database connection

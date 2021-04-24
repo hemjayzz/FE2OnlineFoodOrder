@@ -405,6 +405,7 @@ public class CustmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please Fill the form Correctly");
         }
         else{
+            String UserID = new String ("id");
             String CustomerName = custmNameTxt.getText().trim();
             String CustomerPass = String.valueOf(custmRegPass.getPassword());
             String CustomerAddr = custmAddr.getText().trim();
@@ -412,7 +413,7 @@ public class CustmLogin extends javax.swing.JFrame {
             String CustomerEmail = custmEmail.getText().trim();
             
             //Add arecord to the School table
-            DataHandler.RegisterUser(CustomerName, CustomerPass, CustomerAddr, CustomerPhon,CustomerEmail);
+            DataHandler.RegisterUser(UserID, CustomerName, CustomerPass, CustomerAddr, CustomerPhon,CustomerEmail);
         }
     }//GEN-LAST:event_custmRegBtnActionPerformed
 
