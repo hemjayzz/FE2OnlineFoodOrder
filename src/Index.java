@@ -16,6 +16,7 @@ public class Index extends javax.swing.JFrame {
     public Index() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

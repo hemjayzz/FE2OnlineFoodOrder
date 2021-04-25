@@ -1,5 +1,10 @@
 
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,15 +37,16 @@ public class CustmLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        userTxt = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        passTxt = new javax.swing.JPasswordField();
+        loginBtn = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         custmNameTxt = new javax.swing.JTextField();
@@ -52,10 +58,10 @@ public class CustmLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         custmEmail = new javax.swing.JTextField();
-        custmTeleph = new javax.swing.JTextField();
+        custmPhone = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        resetBtn2 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         custmAddr = new javax.swing.JTextField();
@@ -73,9 +79,9 @@ public class CustmLogin extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\ssani\\Downloads\\MicrosoftTeams-image (6).png")); // NOI18N
         jLabel2.setText("jLabel2");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        userTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                userTxtActionPerformed(evt);
             }
         });
 
@@ -85,22 +91,39 @@ public class CustmLogin extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Password");
 
-        jPasswordField1.setText("jPasswordField1");
+        passTxt.setText("jPasswordField1");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 0, 0));
-        jButton1.setText("LOGIN");
+        loginBtn.setBackground(new java.awt.Color(255, 0, 0));
+        loginBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loginBtn.setText("LOGIN");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel14.setText("Not yet Regeistered?, Please register bellow");
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 255));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 0, 51));
-        jButton3.setText("RESET");
+        resetBtn.setBackground(new java.awt.Color(255, 0, 0));
+        resetBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        resetBtn.setText("RESET");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
 
         jLabel17.setIcon(new javax.swing.ImageIcon("C:\\Users\\ssani\\Downloads\\MicrosoftTeams-image (4).png")); // NOI18N
+
+        backBtn.setBackground(new java.awt.Color(204, 0, 0));
+        backBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        backBtn.setText("BACK");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -120,13 +143,18 @@ public class CustmLogin extends javax.swing.JFrame {
                             .addComponent(jLabel17))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(jButton3))))
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(passTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(userTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGap(98, 98, 98)
+                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(loginBtn))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addComponent(resetBtn)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -137,7 +165,7 @@ public class CustmLogin extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -146,12 +174,13 @@ public class CustmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel3)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8)))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(loginBtn)
+                    .addComponent(resetBtn)
+                    .addComponent(backBtn))
                 .addGap(32, 32, 32)
                 .addComponent(jLabel14))
         );
@@ -173,9 +202,8 @@ public class CustmLogin extends javax.swing.JFrame {
 
         custmRegPass.setText("jPasswordField1");
 
-        custmRegBtn.setBackground(new java.awt.Color(0, 0, 255));
+        custmRegBtn.setBackground(new java.awt.Color(255, 0, 0));
         custmRegBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        custmRegBtn.setForeground(new java.awt.Color(255, 0, 0));
         custmRegBtn.setText("REGISTER");
         custmRegBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,10 +223,14 @@ public class CustmLogin extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(51, 0, 255));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 0, 51));
-        jButton4.setText("RESET");
+        resetBtn2.setBackground(new java.awt.Color(255, 0, 0));
+        resetBtn2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        resetBtn2.setText("RESET");
+        resetBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtn2ActionPerformed(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("Address");
@@ -238,16 +270,12 @@ public class CustmLogin extends javax.swing.JFrame {
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(57, 57, 57)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel20)
-                                    .addComponent(jLabel19)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel21)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel21))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
@@ -264,16 +292,18 @@ public class CustmLogin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(custmRegBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(custmEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(289, 289, 289))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(custmPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addComponent(custmEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(147, 147, 147)))
-                                        .addGap(75, 75, 75)
-                                        .addComponent(jButton4))
-                                    .addComponent(custmTeleph, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                .addComponent(custmRegBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(resetBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -303,7 +333,7 @@ public class CustmLogin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addComponent(custmTeleph, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(custmPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(10, 10, 10)))
@@ -314,16 +344,18 @@ public class CustmLogin extends javax.swing.JFrame {
                         .addGap(7, 7, 7))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(custmEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel21)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(custmEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(12, 12, 12))))))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(custmRegBtn)
-                    .addComponent(jButton4))
-                .addGap(0, 11, Short.MAX_VALUE))
+                    .addComponent(resetBtn2))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -385,9 +417,9 @@ public class CustmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_userTxtActionPerformed
 
     private void custmNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custmNameTxtActionPerformed
         // TODO add your handling code here:
@@ -400,7 +432,7 @@ public class CustmLogin extends javax.swing.JFrame {
     private void custmRegBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custmRegBtnActionPerformed
         // TODO add your handling code here:
         
-        if (custmNameTxt.getText().trim().isEmpty() || custmTeleph.getText().trim().isEmpty() || custmAddr.getText().trim().isEmpty() || custmEmail.getText().trim().isEmpty() || String.valueOf(custmRegPass.getPassword()).trim().isEmpty())
+        if (custmNameTxt.getText().trim().isEmpty() || custmPhone.getText().trim().isEmpty() || custmAddr.getText().trim().isEmpty() || custmEmail.getText().trim().isEmpty() || String.valueOf(custmRegPass.getPassword()).trim().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Please Fill the form Correctly");
         }
@@ -409,13 +441,38 @@ public class CustmLogin extends javax.swing.JFrame {
             String CustomerName = custmNameTxt.getText().trim();
             String CustomerPass = String.valueOf(custmRegPass.getPassword());
             String CustomerAddr = custmAddr.getText().trim();
-            String CustomerPhon = custmTeleph.getText().trim();
+            String CustomerPhon = custmPhone.getText().trim();
             String CustomerEmail = custmEmail.getText().trim();
             
             //Add arecord to the School table
             DataHandler.RegisterUser(UserID, CustomerName, CustomerPass, CustomerAddr, CustomerPhon,CustomerEmail);
         }
     }//GEN-LAST:event_custmRegBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        Index back = new Index();
+        back.setVisible(true);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void resetBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtn2ActionPerformed
+        // TODO add your handling code here:
+        custmNameTxt.setText(null);
+        custmRegPass.setText(null);
+        custmAddr.setText(null);
+        custmEmail.setText(null);
+        custmPhone.setText(null);
+    }//GEN-LAST:event_resetBtn2ActionPerformed
+
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        // TODO add your handling code here:
+        userTxt.setText(null);
+        passTxt.setText(null);
+    }//GEN-LAST:event_resetBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -453,15 +510,13 @@ public class CustmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
     private javax.swing.JTextField custmAddr;
     private javax.swing.JTextField custmEmail;
     private javax.swing.JTextField custmNameTxt;
+    private javax.swing.JTextField custmPhone;
     private javax.swing.JButton custmRegBtn;
     private javax.swing.JPasswordField custmRegPass;
-    private javax.swing.JTextField custmTeleph;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -487,7 +542,10 @@ public class CustmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton loginBtn;
+    private javax.swing.JPasswordField passTxt;
+    private javax.swing.JButton resetBtn;
+    private javax.swing.JButton resetBtn2;
+    private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables
 }
