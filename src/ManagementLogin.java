@@ -8,6 +8,12 @@
  *
  * @author hemja
  */
+
+import javax.swing.JOptionPane;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+
+
 public class ManagementLogin extends javax.swing.JFrame {
 
     /**
@@ -36,7 +42,7 @@ public class ManagementLogin extends javax.swing.JFrame {
         userTxt = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         passTxt = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        loginBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         resetBtn = new javax.swing.JButton();
@@ -78,10 +84,15 @@ public class ManagementLogin extends javax.swing.JFrame {
 
         passTxt.setText("jPasswordField1");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 0, 0));
-        jButton1.setText("LOGIN");
+        loginBtn.setBackground(new java.awt.Color(0, 0, 255));
+        loginBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loginBtn.setForeground(new java.awt.Color(255, 0, 0));
+        loginBtn.setText("LOGIN");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\ssani\\Downloads\\MicrosoftTeams-image (6).png")); // NOI18N
         jLabel2.setText("jLabel2");
@@ -115,7 +126,7 @@ public class ManagementLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(loginBtn)
                         .addGap(18, 18, 18)
                         .addComponent(resetBtn))
                     .addComponent(userTxt)
@@ -143,7 +154,7 @@ public class ManagementLogin extends javax.swing.JFrame {
                     .addComponent(passTxt))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(loginBtn)
                     .addComponent(resetBtn))
                 .addGap(30, 30, 30))
         );
@@ -234,6 +245,28 @@ public class ManagementLogin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_resetBtnActionPerformed
 
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        // TODO add your handling code here:
+        String username = userTxt.getText();
+        String password = passTxt.getText();
+        
+        if (username.contains("sania")&&(password.contains("1234"))){
+            
+            userTxt.setText(null);
+            passTxt.setText(null);
+            //systemExit();
+            ManagementPage management = new ManagementPage();
+            management.setVisible(true);
+            
+        }
+        else{
+            
+           JOptionPane.showMessageDialog(null, "Inavlis Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
+           passTxt.setText(null);
+           userTxt.setText(null);
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -271,7 +304,6 @@ public class ManagementLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -284,8 +316,13 @@ public class ManagementLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField passTxt;
     private javax.swing.JButton resetBtn;
     private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables
+
+    private void systemExit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
