@@ -146,8 +146,8 @@ public class Index extends javax.swing.JFrame {
 
     private void ManagmntBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManagmntBtnActionPerformed
         // TODO add your handling code here:
-        ManagementLogin mangmt = new ManagementLogin();
-        mangmt.setVisible(true);
+        ManagementLogin mangmtLog = new ManagementLogin();
+        mangmtLog.setVisible(true);
     }//GEN-LAST:event_ManagmntBtnActionPerformed
 
     /**
