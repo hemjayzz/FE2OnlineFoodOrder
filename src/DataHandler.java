@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class DataHandler{
 	// DB details
-    private static final String dbURL = "jdbc:ucanaccess://QuizDB.accdb";
+    private static final String dbURL = "jdbc:ucanaccess://FE2onlineFoodOrder.accdb";
     private static java.sql.Connection con;
     private static java.sql.Statement stm;
     private static java.sql.ResultSet rs;
@@ -25,13 +25,13 @@ public class DataHandler{
 
    public static Vector<String> getTables()	{
 		Vector<String> tableNames = new Vector<String>();
-		tableNames.add("QuizQuestions");
-		tableNames.add("User");
-                tableNames.add("CanTake");
+		tableNames.add("Customers");
+		tableNames.add("ItemForRental");
+                tableNames.add("Dishes");
 		return tableNames;
 	}
 public static void RegisterUser(String UserID,String CustomerName, String CustomerPass,  String CustomerAddr, String CustomerPhon,String CustomerEmail)	{
-        String msAccDB = "QuizDB.accdb";
+        String msAccDB = "FE2onlineFoodOrder.accdb";
         String dbURL = "jdbc:ucanaccess://" + msAccDB; 
         String query = "INSERT INTO User VALUES ('"+UserID +"','"+ CustomerName +"','"+ CustomerPass  +"');";
         System.out.println(query);
@@ -55,9 +55,9 @@ public static void RegisterUser(String UserID,String CustomerName, String Custom
         
 }
 
-public static void checkAnswer(String userAns){
+public static void checkEmployee(String userAns){
      int count = 0;
-    String sqlQuery = "SELECT * FROM  QuizQuestions WHERE QuizAnsText ='"+userAns+"'";
+    String sqlQuery = "SELECT * FROM  Employee WHERE EmployeeName ='"+userAns+"'";
        try{
      Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
            con = java.sql.DriverManager.getConnection(dbURL, "","");
@@ -118,8 +118,8 @@ public static void checkAnswer(String userAns){
 }
 
 
-public static void searchQuestions(String table)	{
-       String sqlQuery = "SELECT QuestionText, QuestionOption FROM  "+table;
+public static void searchDishes(String table)	{
+       String sqlQuery = "SELECT Dishes , ItemForRental, Customers FROM  "+table;
        try{
      Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
            con = java.sql.DriverManager.getConnection(dbURL, "","");
@@ -162,7 +162,7 @@ public static Object[] getTitles(String table)        {
 }
         
 public static Object[][] getRows(String table)        {
-      searchQuestions(table);
+      searchDishes(table);
       Object [][] content;
       try{
           // determine the number of rows
