@@ -1,4 +1,7 @@
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -16,6 +19,15 @@ public class CustmLogin extends javax.swing.JFrame {
     /**
      * Creates new form CustmLogin
      */
+    	// DB details
+    private static final String dbURL = "jdbc:ucanaccess://FE2onlineFoodOrder.accdb";
+    private static java.sql.Connection con;
+    private static java.sql.Statement stm;
+    private static java.sql.ResultSet rs;
+    private static java.sql.ResultSetMetaData rsMeta;
+    private static java.sql.PreparedStatement pst;
+    
+    
     public CustmLogin() {
         initComponents();
     }
@@ -32,14 +44,14 @@ public class CustmLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        CustNameLog = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        CustPassLog = new javax.swing.JPasswordField();
+        loginBtn = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        resetBtnLogn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         custmNameTxt = new javax.swing.JTextField();
@@ -54,10 +66,11 @@ public class CustmLogin extends javax.swing.JFrame {
         custmTeleph = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         custmAddr = new javax.swing.JTextField();
+        exitBtn = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
 
@@ -68,9 +81,9 @@ public class CustmLogin extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\USERICON.jpg")); // NOI18N
         jLabel2.setText("jLabel2");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        CustNameLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                CustNameLogActionPerformed(evt);
             }
         });
 
@@ -82,20 +95,26 @@ public class CustmLogin extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\password Icon.jpg")); // NOI18N
 
-        jPasswordField1.setText("jPasswordField1");
-
-        jButton1.setBackground(new java.awt.Color(0, 0, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 0, 0));
-        jButton1.setText("LOGIN");
+        loginBtn.setBackground(new java.awt.Color(153, 255, 0));
+        loginBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loginBtn.setText("LOGIN");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel14.setText("Not yet Regeistered?, Please register bellow");
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 255));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 0, 51));
-        jButton3.setText("RESET");
+        resetBtnLogn.setBackground(new java.awt.Color(255, 255, 0));
+        resetBtnLogn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        resetBtnLogn.setText("RESET");
+        resetBtnLogn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnLognActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -104,47 +123,46 @@ public class CustmLogin extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(102, 102, 102)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
                         .addGap(41, 41, 41)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CustPassLog, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CustNameLog, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(57, 57, 57)
-                                .addComponent(jButton3))))
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(resetBtnLogn)))))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(52, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGap(14, 14, 14)
+                            .addComponent(CustNameLog, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(13, 13, 13)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel8)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CustPassLog, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(loginBtn)
+                    .addComponent(resetBtnLogn))
                 .addGap(32, 32, 32)
                 .addComponent(jLabel14))
         );
@@ -166,11 +184,8 @@ public class CustmLogin extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\password Icon.jpg")); // NOI18N
 
-        custmRegPass.setText("jPasswordField1");
-
-        custmRegBtn.setBackground(new java.awt.Color(0, 0, 255));
+        custmRegBtn.setBackground(new java.awt.Color(102, 255, 51));
         custmRegBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        custmRegBtn.setForeground(new java.awt.Color(255, 0, 0));
         custmRegBtn.setText("REGISTER");
         custmRegBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,15 +209,28 @@ public class CustmLogin extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\email.jpg")); // NOI18N
 
-        jButton4.setBackground(new java.awt.Color(51, 0, 255));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 0, 51));
-        jButton4.setText("RESET");
+        resetBtn.setBackground(new java.awt.Color(255, 255, 0));
+        resetBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        resetBtn.setText("RESET");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel15.setText("Address");
 
         jLabel16.setIcon(new javax.swing.ImageIcon("C:\\Users\\hemja\\Pictures\\house.jpg")); // NOI18N
+
+        exitBtn.setBackground(new java.awt.Color(255, 0, 51));
+        exitBtn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        exitBtn.setText("EXIT");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -241,8 +269,10 @@ public class CustmLogin extends javax.swing.JFrame {
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(custmEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(75, 75, 75)
-                        .addComponent(jButton4)))
+                        .addGap(47, 47, 47)
+                        .addComponent(resetBtn)
+                        .addGap(29, 29, 29)
+                        .addComponent(exitBtn)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -281,7 +311,8 @@ public class CustmLogin extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(custmRegBtn)
-                    .addComponent(jButton4))
+                    .addComponent(resetBtn)
+                    .addComponent(exitBtn))
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
@@ -344,9 +375,9 @@ public class CustmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void CustNameLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustNameLogActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_CustNameLogActionPerformed
 
     private void custmNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custmNameTxtActionPerformed
         // TODO add your handling code here:
@@ -368,12 +399,71 @@ public class CustmLogin extends javax.swing.JFrame {
             String CustomerPass = String.valueOf(custmRegPass.getPassword());
             String CustomerAddr = custmAddr.getText().trim();
             String CustomerPhon = custmTeleph.getText().trim();
+            int phone =Integer.parseInt(CustomerPhon);
             String CustomerEmail = custmEmail.getText().trim();
+            int CustomerID = 1;
+            
             
             //Add arecord to the School table
-            DataHandler.RegisterUser(CustomerName, CustomerPass, CustomerAddr, CustomerPhon,CustomerEmail);
+            DataHandler.RegisterCustomer(CustomerID ,CustomerName, CustomerAddr,phone,CustomerEmail, CustomerPass);
         }
     }//GEN-LAST:event_custmRegBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        // TODO add your handling code here:
+        custmNameTxt.setText(null);
+        custmTeleph.setText(null);
+        custmRegPass.setText(null);
+        custmAddr.setText(null);
+        custmEmail.setText(null);
+                
+    }//GEN-LAST:event_resetBtnActionPerformed
+
+    private void resetBtnLognActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnLognActionPerformed
+        // TODO add your handling code here:
+        CustNameLog.setText(null);
+        CustPassLog.setText(null);
+    }//GEN-LAST:event_resetBtnLognActionPerformed
+
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        // TODO add your handling code here:
+        
+        if (CustNameLog.getText().trim().isEmpty() || String.valueOf(CustPassLog.getPassword()).trim().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please Fill the form Correctly");
+        }
+        else{
+            String Name = custmNameTxt.getText().trim();
+            String Pass = String.valueOf(custmRegPass.getPassword());
+            //DataHandler.CustomerLogin(CustomerName, CustomerPass);
+            
+        try{    
+            con = java.sql.DriverManager.getConnection(dbURL, "","");
+            stm = con.createStatement();
+            String query = "SELECT * FROM Customers WHERE  CustomerName ='"+Name+"' and Password ='"+ Pass+"'";
+            rs =stm.executeQuery(query);
+            
+            if (rs.next()){
+                JOptionPane.showMessageDialog(null, "Login Sucessfully");
+                FoodOrRental rental = new FoodOrRental();
+                rental.setVisible(true);;
+            }
+            else{
+                JOptionPane.showMessageDialog(null, " WRONG User or Password  ");
+            }
+            
+        }
+        catch ( Exception ex ) {
+            System.err.println( ex );
+            ex.printStackTrace();
+        }
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -411,15 +501,15 @@ public class CustmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CustNameLog;
+    private javax.swing.JPasswordField CustPassLog;
     private javax.swing.JTextField custmAddr;
     private javax.swing.JTextField custmEmail;
     private javax.swing.JTextField custmNameTxt;
     private javax.swing.JButton custmRegBtn;
     private javax.swing.JPasswordField custmRegPass;
     private javax.swing.JTextField custmTeleph;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -440,7 +530,8 @@ public class CustmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton loginBtn;
+    private javax.swing.JButton resetBtn;
+    private javax.swing.JButton resetBtnLogn;
     // End of variables declaration//GEN-END:variables
 }
